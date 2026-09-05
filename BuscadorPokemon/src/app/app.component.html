@@ -1,0 +1,57 @@
+<main class="page">
+  <header class="hero">
+    <div class="pokeball" aria-hidden="true"></div>
+    <h1>Pokédex</h1>
+    <p>Busca un Pokémon por su nombre o número y descubre su imagen.</p>
+  </header>
+
+  <form class="search" (ngSubmit)="search()">
+    <input
+      type="text"
+      name="query"
+      [(ngModel)]="query"
+      placeholder="Ej: pikachu, charizard, 25..."
+      autocomplete="off"
+      aria-label="Nombre o número del Pokémon"
+    />
+    <button type="submit" [disabled]="loading">
+      {{ loading ? 'Buscando...' : 'Buscar' }}
+    </button>
+  </form>
+
+  <section class="results" aria-live="polite">
+    <p class="status" *ngIf="loading">Cargando Pokémon...</p>
+
+    <p class="status error" *ngIf="error && !loading">{{ error }}</p>
+
+    <article class="card" *ngIf="pokemon && !loading">
+      <span class="number">#{{ pokemon.id }}</span>
+      <img
+        [src]="pokemon.image"
+        [alt]="'Imagen de ' + pokemon.name"
+        width="240"
+        height="240"
+      />
+      <h2>{{ pokemon.name }}</h2>
+
+      <ul class="types">
+        <li *ngFor="let type of pokemon.types" class="type">{{ type }}</li>
+      </ul>
+
+      <div class="stats">
+        <div>
+          <span class="stat-label">Altura</span>
+          <span class="stat-value">{{ pokemon.height / 10 }} m</span>
+        </div>
+        <div>
+          <span class="stat-label">Peso</span>
+          <span class="stat-value">{{ pokemon.weight / 10 }} kg</span>
+        </div>
+      </div>
+    </article>
+
+    <p class="hint" *ngIf="!pokemon && !loading && !error">
+      Escribe el nombre de un Pokémon y presiona Buscar.
+    </p>
+  </section>
+</main>
