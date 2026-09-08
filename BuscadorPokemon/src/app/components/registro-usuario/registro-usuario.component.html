@@ -1,1 +1,157 @@
-<p>registro-usuario works!</p>
+<main class="container">
+    <h1>Formulario</h1>
+
+<form id='Formulario' (ngSubmit)="guardarUsuario()">
+
+        <div>
+        <label for="nombre">Nombre:</label><br>
+        <input type="text" id="nombre" [(ngModel)]="nombre" required placeholder="Ej: Camilo"><br><br>
+        </div>
+        
+        <div>
+        <label for="apellido">Apellido:</label><br>
+        <input type="text" id="apellido" [(ngModel)]="apellido" required placeholder="Ej: Perez"><br><br>
+        </div>
+        
+        
+        <div>
+        <label for="tipo_identificacion">Tipo de Identificación:</label><br>
+        <select id="tipo_identificacion" name="tipo_identificacion" [(ngModel)]="tipo_identificacion" required>
+            <option value="" selected disabled>Seleccione el tipo de documento...</option>
+            <option value="CC">Cédula de Ciudadanía (CC)</option>
+            <option value="TI">Tarjeta de Identidad (TI)</option>
+            <option value="PA">Pasaporte (PA)</option>
+        </select><br><br>
+        </div>
+        
+        <div>
+        <label for="numero_identificacion">Número de Identificación:</label><br>
+        <input
+            type="text"
+            id="numero_identificacion"
+            name="numero_identificacion"
+            [(ngModel)]="numero_identificacion"
+            placeholder="Ej: 123456789"
+            maxlength="12"
+            pattern="[0-9]+"
+            inputmode="numeric"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+            required><br><br>
+        </div>
+       
+        <div>
+        <label for="fecha_nacimiento">Fecha de Nacimiento:</label><br>
+        <input type="date" id="fecha_nacimiento" name="fecha_nacimiento" [(ngModel)]="fecha_nacimiento" required><br><br>
+        </div>
+        
+        <div>
+        <label for="celular">Número de Celular:</label><br>
+        <input
+            type="tel"
+            id="celular"
+            name="celular"
+            [(ngModel)]="celular"
+            placeholder="Ej: 3004177843"
+            maxlength="10"
+            pattern="[0-9]{10}"
+            inputmode="numeric"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+            required><br><br>
+        </div>
+        
+        <div>
+        <label for="correo">Correo Electrónico:</label><br>
+        <input
+            type="email"
+            id="correo"
+            name="correo"
+            [(ngModel)]="correo"
+            placeholder="micorreo@gmail.com"
+            required><br><br>
+        </div>
+        
+        <div>
+        <label for="pais">País de domicilio:</label><br>
+       
+        
+        <select id="pais"  type="text" [(ngModel)]="pais" required>
+                <option value="" disabled >Seleccione el pais... ></option>
+                <option value="169">Colombia </option>
+                <option value="023">Alemania </option>
+                <option value="105">Brasil   </option>
+            </select>
+            <br>
+        </div>
+        <div>
+        <label for="ciudad">Ciudad de domicilio:</label><br>
+        <select type="text"  id ="ciudad" [(ngModel)]="ciudad">
+            <optgroup label ="Colombia">
+                <option value="1101">Bogota D.C</option>
+                <option value="54001"> Cucuta</option>
+                <option value="66001"> Pereira</option>
+                <option value="76001"> Cali</option>
+                <option value="13001"> Cartagena</option>
+            </optgroup>
+
+            <optgroup label ="Alemania">
+                <option value="030">Berlin</option>
+                <option value="040">Hamburgo</option>
+                <option value="089">Munich</option>
+                <option value="0221">Colonia</option>
+                <option value="069">Francfort del meno</option>
+            </optgroup>
+
+            <optgroup label="Brasil">
+                <option value="21">Rio de janeiro</option>
+                <option value="61">Brasilia</option>
+                <option value="71">Salvador de la Bahia</option>
+                <option value="85">Fortaleza</option>
+                <option value="31"> Belo Horizonte</option>
+            </optgroup>
+
+        </select>
+        </div>
+        <div>
+        <input type="checkbox" id="politica_datos" [(ngModel)]="politica_datos" required>
+        <label for="politica_datos">
+            Acepto la política de tratamiento de datos.
+        </label><br><br>
+       
+        <div>
+        <button type="submit" class="btn-submit">Enviar 
+               </button>
+         </div>
+        
+</form>
+
+    <div>
+        <form id="formPokedex">
+            <div>
+            <label> Inserte el nombre del Pokemon</label>
+            <input type="text" id="pokemonInput" placeholder="Ej. Pikachu, Charmarder...">
+            </div>
+            <div>
+                <button type="submit"> Buscar</button>
+            </div>
+        </form>
+    </div>
+<div id="resultadoPokemon">
+    <img src="pokemonImage" src="" alt="imagen pokemon" style="display: none;">
+    <p>Que hizo </p>
+</div>    
+@if (ultimoUsuarioRegistrado(); as user){
+    <div>
+        <h2>Último usuario registrado:</h2>
+        <p>Nombre: {{ user.nombre }}</p>
+        <p>Apellido: {{ user.apellido }}</p>
+        <p>Tipo de Identificación: {{ user.tipo_identificacion }}</p>
+        <p>Número de Identificación: {{ user.numero_identificacion }}</p>
+        <p>Fecha de Nacimiento: {{ user.fecha_nacimiento }}</p>
+        <p>Número de Celular: {{ user.celular }}</p>
+        <p>Correo Electrónico: {{ user.correo }}</p>
+        <p>País de domicilio: {{ user.pais }}</p>
+        <p>Ciudad de domicilio: {{ user.ciudad }}</p>
+    </div>
+}
+</main> 
+
