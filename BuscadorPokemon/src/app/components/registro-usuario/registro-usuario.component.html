@@ -1,7 +1,7 @@
 <main class="container">
     <h1>Formulario</h1>
 
-<form id='Formulario' (ngSubmit)="guardarUsuario()">
+    <form id='Formulario' (ngSubmit)="guardarUsuario()">
 
         <div>
         <label for="nombre">Nombre:</label><br>
@@ -112,46 +112,30 @@
         </select>
         </div>
         <div>
-        <input type="checkbox" id="politica_datos" [(ngModel)]="politica_datos" required>
-        <label for="politica_datos">
-            Acepto la política de tratamiento de datos.
-        </label><br><br>
+            <input type="checkbox" id="politica_datos" [(ngModel)]="politica_datos" required
+            label for="politica_datos">
+            Acepta la política de tratamiento de datos.
+           
+        </div>
        
         <div>
         <button type="submit" class="btn-submit">Enviar 
                </button>
-         </div>
+        </div>
         
-</form>
-
-    <div>
-        <form id="formPokedex">
-            <div>
-            <label> Inserte el nombre del Pokemon</label>
-            <input type="text" id="pokemonInput" placeholder="Ej. Pikachu, Charmarder...">
-            </div>
-            <div>
-                <button type="submit"> Buscar</button>
-            </div>
-        </form>
-    </div>
-<div id="resultadoPokemon">
-    <img src="pokemonImage" src="" alt="imagen pokemon" style="display: none;">
-    <p>Que hizo </p>
-</div>    
-@if (ultimoUsuarioRegistrado(); as user){
-    <div>
-        <h2>Último usuario registrado:</h2>
-        <p>Nombre: {{ user.nombre }}</p>
-        <p>Apellido: {{ user.apellido }}</p>
-        <p>Tipo de Identificación: {{ user.tipo_identificacion }}</p>
-        <p>Número de Identificación: {{ user.numero_identificacion }}</p>
-        <p>Fecha de Nacimiento: {{ user.fecha_nacimiento }}</p>
-        <p>Número de Celular: {{ user.celular }}</p>
-        <p>Correo Electrónico: {{ user.correo }}</p>
-        <p>País de domicilio: {{ user.pais }}</p>
-        <p>Ciudad de domicilio: {{ user.ciudad }}</p>
-    </div>
-}
+    </form>
+ @if (ultimoUsuarioRegistrado(); as user) {
+        <div>
+            <h2>Último usuario registrado:</h2>
+            <p>Nombre completo: {{ user.nombreCompleto }}</p>
+            <p>Tipo de Identificación: {{ user.tipo }}</p>
+            <p>Número de Identificación: {{ user.numero }}</p>
+            <p>Fecha de Nacimiento: {{ user.FechaNacimiento }}</p>
+            <p>Número de Celular: {{ user.celular }}</p>
+            <p>Correo Electrónico: {{ user.correo }}</p>
+            <p>País de domicilio: {{ user.pais }}</p>
+            <p>Ciudad de domicilio: {{ user.ciudad }}</p>
+        </div>
+    }
 </main> 
 
