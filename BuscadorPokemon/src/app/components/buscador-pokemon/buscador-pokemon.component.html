@@ -1,6 +1,7 @@
 <form (ngSubmit)="buscarPokemon()" #pokemonForm="ngForm">
 
     <div>
+        <label>Inserte el nombre del Pokemon </label>
         <input type="text" [(ngModel)]="nombrePokemonInput" name="nombrePokemon"
             placeholder="Ej. pikachu , charmander, bulbasaur" required />
     </div>
