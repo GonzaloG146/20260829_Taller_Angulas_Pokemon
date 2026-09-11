@@ -1,4 +1,4 @@
-import { Directive, ElementRef,  } from '@angular/core';
+import { Directive, ElementRef, HostListener, inject, input } from '@angular/core';
 
 @Directive({
   selector: '[appResaltarTarjeta]',
@@ -9,21 +9,21 @@ export class ResaltarTarjetaDirective {
 
   colorBorde = input<string>('#ffff00');
 
-  @HostListener('mouseenter') onMouseEnter(){
-    this.aplicarEfecto(`3px solid ${this.colorBorde()}`, 'scale(1.03')
-  }
-  @HostListener('mouseenter') onMouseEnter(){
-
-    this.aplicarEfecto(`3px solid #e0e0e0}`, 'scale(1')
+  @HostListener('mouseenter')
+  onMouseEnter(): void {
+    this.aplicarEfecto(`3px solid ${this.colorBorde()}`, 'scale(1.03)');
   }
 
-  private aplicarEfecto(borde: string, transformacion: string){
+  @HostListener('mouseleave')
+  onMouseLeave(): void {
+    this.aplicarEfecto('3px solid #e0e0e0', 'scale(1)');
+  }
+
+  private aplicarEfecto(borde: string, transformacion: string): void {
     this.el.nativeElement.style.border = borde;
     this.el.nativeElement.style.transform = transformacion;
     this.el.nativeElement.style.transition = 'all 0.3s ease-in-out 0.2s';
   }
-  
-
 }
 
 

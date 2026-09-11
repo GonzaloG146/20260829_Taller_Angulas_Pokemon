@@ -1,50 +1,61 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
-interface PokemonData {
-  name: string;
-  image: string;
-  type: string;
-}
+import { NgClass } from '@angular/common';
+import { PokemonStoragSkipTestService, PokemonTarjeta } from '../../services/pokemon-storag--skip-test.service';
+import {ResaltarTarjetaDirective} from '../../directives/resaltar-tarjeta.directive';
 
 @Component({
   selector: 'app-buscador-pokemon',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, NgClass, ResaltarTarjetaDirective],
   templateUrl: './buscador-pokemon.component.html',
   styleUrl: './buscador-pokemon.component.css'
 })
 export class BuscadorPokemonComponent {
+   pokemonService = inject(PokemonStoragSkipTestService);
+
 
   nombrePokemonInput = signal('');
-  Pokemon = signal<PokemonData | null>(null);
+  pokemon = signal<PokemonTarjeta | null>(null);
   mensajeError = signal<string | null>(null);
+  cargando = signal(false); 
+
   async buscarPokemon() {
 
     const nombrePokemon = this.nombrePokemonInput().trim().toLowerCase();
 
     if(!nombrePokemon) return; 
 
+    this.cargando.set(true)
     this.mensajeError.set(null);
-    try {
 
-      const respuesta = await fetch(`https://pokeapi.co/api/v2/pokemon/${nombrePokemon}`);
-      
-
-    if (!respuesta.ok) {
-        throw new Error('¡No encontre nada chamo!');
-    } 
-    const datos = await respuesta.json();
-
-    this.Pokemon.set({
-      name: datos.name.toUpperCase(),
-      image: datos.sprites.front_default,
-      type: datos.types.map((typeInfo: any) => typeInfo.type.name).join(', ')
+    this.pokemonService.buscarEnAPI(nombrePokemon).subscribe({
+      next: (res) => {
+        this.pokemon.set({
+          id:res.id,
+          name: res.name.toUpperCase(),
+          image: res.sprite.front_default,
+          type: res.types[0].type.name,
+          baseExperience: res.base_experience,
+          esFavorito: false
+        });
+        this.cargando.set(false);
+      }, error:() => {
+        this.pokemon.set(null);
+        this.mensajeError.set('Ojito, Pokemon no encontrado');
+        this.cargando.set(false);
+      }
     });
-  } catch (error: any) {
-    this.Pokemon.set(null);
-    this.mensajeError.set(error.message);
-    }
+    
+  }   
+guardarEnEquipo(){
+  const poke = this.pokemon();
+
+  if(poke){
+    this.pokemonService.guardarPokemon(poke);
+    alert(`${poke.name} agregado al almacenamiento exitosamente`);
+    this.pokemon.set(null);
+    this.nombrePokemonInput.set('');
   }
 }
-  
+}

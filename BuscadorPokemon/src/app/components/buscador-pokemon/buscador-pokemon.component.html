@@ -1,34 +1,37 @@
-<form (ngSubmit)="buscarPokemon()" #pokemonForm="ngForm">
-
+<div>
+<form (ngSubmit)="buscarPokemon()" >
+    <label for="nombrePokemon">Inserte el nombre del Pokemon </label>
     <div>
-        <label>Inserte el nombre del Pokemon </label>
-        <input type="text" [(ngModel)]="nombrePokemonInput" name="nombrePokemon"
-            placeholder="Ej. pikachu , charmander, bulbasaur" required />
+            <label>Inserte el nombre del Pokemon </label>
+            <input id="nombrePokemon" type="text" [(ngModel)]="nombrePokemonInput" name="nombrePokemon"
+                    placeholder="Ej. pikachu , charmander, bulbasaur" required />
     </div>
-
-    <button type="submit">Buscar</button>
-
-</form>
-
-<div id="resultadoPokemon">
-
-    @if (Pokemon(); as p) {
-
     <div>
-        <h2>{{ p.name }}</h2>
+    <button type="submit" [disable]="cargando()"> {{ cargando() ? 'Escaneando...' : 'Buscar' }}</button>
+    </div>
+@if (mensajeError(); as mensaje){
+    <p class="error">{{ mensajeError() }}</p>
+}
 
-        <img [src]="p.image" [alt]="p.name">
+@if(pokemon(); as poke){
+    <div appResaltarTarjeta colorBorde="#0000FF" class="card-pokemon">
+        <h3> {{ poke.name }} (#{{poke.id}}) </h3>
+        <img [src]="poke.img"/>
 
         <p>
-            <strong>Elementos</strong>
-            {{ p.type }}
+            Tipo
+            <span class="badge_tipo"[ngStyle]="{
+                'background-color  : poke.type === 'fire' ? '#FF0000' :
+                poke.type === 'water' ? '#0000FF' :
+                poke.type === 'grass' ? '#008000' : '#757575'
+            }">
+                {{ poke.type }}
+            </span>
         </p>
+            <p> Exp. Base: <strong>{{ poke.baseExperience }}</strong> </p>
+            <button class="btn-guardar" (click)="guardarEnEquipo()">
+                Almacenar en Inventario
+            </button>
+        <button (click)="guardarEnEquipo()">Guardar en equipo</button>
     </div>
-
-    } @else {
-
-    <p>Error con aura</p>
-
-    }
-
-</div>
+}
