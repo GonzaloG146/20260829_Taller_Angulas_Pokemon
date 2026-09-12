@@ -13,7 +13,7 @@ export interface PokemonTarjeta {
 @Injectable({
   providedIn: 'root'
 })
-export class PokemonStoragSkipTestService {
+export class PokemonStorageService {
   private http = inject(HttpClient);
   private readonly STORAGE_KEY = 'equipo_pokemon_registrador';
 
@@ -43,7 +43,7 @@ export class PokemonStoragSkipTestService {
   }
 
   // 3. Actualizar Pokémon
-  actualizarFavoritoI(id: number): void {
+  actualizarFavorito(id: number): void {
     const actualizados = this.misPokemons().map((poke: PokemonTarjeta) => {
       if (poke.id === id) {
         return { ...poke, esFavorito: !poke.esFavorito };

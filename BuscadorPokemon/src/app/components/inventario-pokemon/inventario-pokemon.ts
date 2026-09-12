@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import {  NgClass } from '@angular/common';
-import { PokemonStoragSkipTestService, PokemonTarjeta } from '../../services/pokemon-storag--skip-test.service';
+import { PokemonStorageService, PokemonTarjeta } from '../../services/pokemon-storage.service';
 import {ResaltarTarjetaDirective} from '../../directives/resaltar-tarjeta.directive';
 
 @Component({
@@ -10,7 +10,7 @@ import {ResaltarTarjetaDirective} from '../../directives/resaltar-tarjeta.direct
   templateUrl: './inventario-pokemon.html',
   styleUrl: './inventario-pokemon.css'
 })
-export class InventarioPokemon {
-  pokemonService = inject(PokemonStoragSkipTestService);
+export class InventarioPokemonComponent {
+  pokemonService = inject(PokemonStorageService);
 
 }

@@ -7,8 +7,10 @@
                     placeholder="Ej. pikachu , charmander, bulbasaur" required />
     </div>
     <div>
-    <button type="submit" [disable]="cargando()"> {{ cargando() ? 'Escaneando...' : 'Buscar' }}</button>
+    <button type="submit" [disabled]="cargando()"> {{ cargando() ? 'Escaneando...' : 'Buscar' }}</button>
     </div>
+</form>
+</div>
 @if (mensajeError(); as mensaje){
     <p class="error">{{ mensajeError() }}</p>
 }
@@ -16,12 +18,12 @@
 @if(pokemon(); as poke){
     <div appResaltarTarjeta colorBorde="#0000FF" class="card-pokemon">
         <h3> {{ poke.name }} (#{{poke.id}}) </h3>
-        <img [src]="poke.img"/>
+        <img [src]="poke.image"/>
 
         <p>
             Tipo
-            <span class="badge_tipo"[ngStyle]="{
-                'background-color  : poke.type === 'fire' ? '#FF0000' :
+            <span class="badge_tipo" [ngStyle]="{
+                'background-color'  : poke.type === 'fire' ? '#FF0000' :
                 poke.type === 'water' ? '#0000FF' :
                 poke.type === 'grass' ? '#008000' : '#757575'
             }">
@@ -32,6 +34,5 @@
             <button class="btn-guardar" (click)="guardarEnEquipo()">
                 Almacenar en Inventario
             </button>
-        <button (click)="guardarEnEquipo()">Guardar en equipo</button>
     </div>
 }
